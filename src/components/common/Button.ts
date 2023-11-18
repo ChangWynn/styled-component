@@ -1,8 +1,25 @@
 import styled, { css } from "styled-components";
 
+const largeStyles = ({ $large }: { $large?: boolean }) => {
+  if ($large) {
+    return css`
+      padding: 10px;
+      border-radius: 5px;
+      font-size: 1.5em;
+    `;
+  } else {
+    return css`
+      padding: 8px;
+      border-radius: 4px;
+      font-size: 1em;
+    `;
+  }
+};
+
 export const Button = styled.button<{ $primary?: boolean; $large?: boolean }>`
   color: white;
-  background: ${({ $primary }) => ($primary ? "#fdd54f" : "#f8049c")};
+  background: ${({ $primary }) =>
+    $primary ? ({ theme }) => theme.primaryColor : ({ theme }) => theme.secondaryColor};
   font-weight: bold;
   box-shadow: none;
   border: none;
@@ -10,18 +27,8 @@ export const Button = styled.button<{ $primary?: boolean; $large?: boolean }>`
   display: block;
   white-space: none;
 
-  ${({ $large }) =>
-    $large
-      ? css`
-          padding: 10px;
-          border-radius: 5px;
-          font-size: 1.5em;
-        `
-      : css`
-          padding: 8px;
-          border-radius: 4px;
-          font-size: 1em;
-        `}
+  // using functions
+  ${largeStyles}
 
   &.selected {
     background: green;

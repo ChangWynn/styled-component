@@ -1,22 +1,6 @@
 import styled from "styled-components";
-import { Layout, Input, PasswordInput, Button } from "../common/index";
+import { Layout, Input, PasswordInput, Button, Spinner } from "../common/index";
 import { useEffect, useState } from "react";
-
-const Form = styled.form`
-  width: 100%;
-  max-width: 400px;
-  background: white;
-  border: 1px solid #eee;
-  padding: 16px;
-  box-sizing: border-box;
-  color: black;
-  border-radius: 4px;
-
-  .alt-text {
-    text-align: center;
-    margin: 10px 0;
-  }
-`;
 
 let timeout: any;
 const Login = () => {
@@ -54,21 +38,28 @@ const Login = () => {
       <h1>Home</h1>
       <Layout>Login</Layout>
       <Form onSubmit={handleSubmit}>
-        <Input
-          name="username"
-          placeholder="Username"
-          type="text"
-          onChange={handleInputChange}
-          value={formFields.username}
-        />
-        <PasswordInput
-          name="password"
-          // placeholder="password"
-          // type="password"
-          onChange={handleInputChange}
-          value={formFields.password}
-        />
-        <Button type="submit" $large disabled={loading}>
+        {loading ? (
+          <Spinner />
+        ) : (
+          <>
+            <span>Login if you have an account</span>
+            <Input
+              name="username"
+              placeholder="Username"
+              type="text"
+              onChange={handleInputChange}
+              value={formFields.username}
+            />
+            <PasswordInput
+              name="password"
+              // placeholder="password"
+              // type="password"
+              onChange={handleInputChange}
+              value={formFields.password}
+            />
+          </>
+        )}
+        <Button type="submit" $large $primary disabled={loading}>
           {loading ? "Loading..." : "Login"}
         </Button>
         {!loading && (
@@ -83,3 +74,35 @@ const Login = () => {
 };
 
 export default Login;
+
+const Form = styled.form`
+  width: 100%;
+  max-width: 400px;
+  background: white;
+  border: 1px solid #eee;
+  padding: 16px;
+  box-sizing: border-box;
+  color: black;
+  border-radius: 4px;
+
+  .alt-text {
+    text-align: center;
+    margin: 10px 0;
+  }
+
+  ${Button} {
+    margin-top: 40px;
+  }
+
+  ${Button}:first-of-type {
+    margin-top: 40px;
+  }
+
+  > ${Button} {
+    margin-top: 40px;
+  }
+
+  > ${Button}:first-of-type {
+    margin-top: 40px;
+  }
+`;
